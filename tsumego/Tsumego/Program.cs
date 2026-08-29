@@ -24,15 +24,23 @@ var stone = new Stone(Color.Black);
 var stone2 = new Stone(Color.White);
 var stone3 = new Stone(Color.Black);
 var stone4 = new Stone(Color.White);
+var stone5 = new Stone(Color.Black);
+var stone6 = new Stone(Color.White);
+var stone7 = new Stone(Color.Black);
+var stone8 = new Stone(Color.White);
 
-board.PlayMove(0, 2, stone);
-board.PlayMove(1, 3, stone2);
-board.PlayMove(1, 3, stone2);
-board.PlayMove(1, 3, stone2);
+board.PlayMove(5, 5, stone);
+board.PlayMove(5, 4, stone2);
+board.PlayMove(3, 3, stone3);
+board.PlayMove(5, 6, stone4);
+board.PlayMove(3, 7, stone5);
+board.PlayMove(4, 5, stone6);
+board.PlayMove(7, 3, stone7);
+board.PlayMove(6, 5, stone8);
 
 board.PrintBoard();
 
-// check if move is legal
+// check if move is legal - do this inside the PlayMove() method
 //    - KO - infinite loop
 //    - is there already a stone there
 //    - you cannot place a stone in the middle of 4 stones

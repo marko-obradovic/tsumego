@@ -31,12 +31,11 @@ public class Board
           "Board height must be between 1 and 19."
           );
     }
-
   }
 
   public bool PlayMove(int x, int y, Stone stone)
   {
-    Positions[x, y] = stone;
+    Positions[x - 1 , YSize - y] = stone;
     return true;
   }
 
@@ -66,7 +65,7 @@ public class Board
         Console.Write(" ");
       }
 
-      Console.Write(y + 1);
+      Console.Write(YSize - y);
     }
 
     if (Positions[x, y] is null)
