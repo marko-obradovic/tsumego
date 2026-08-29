@@ -1,6 +1,16 @@
-namespace Tsumego.Src;
+namespace Tsumego.Src.Game;
 
-enum Stone
+public class Stone
+{
+  public Color Color { get; }
+
+  public Stone(Color color)
+  {
+    Color = color;
+  }
+}
+
+public enum Color
 {
   Black,
   White
