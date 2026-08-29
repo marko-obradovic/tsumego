@@ -14,28 +14,37 @@ public class Board
 
     Positions = new Stone?[XSize, YSize];
 
-    if (XSize is < 1 or > 19)
+    if (xSize is < 1 or > MaxBoardSize)
     {
       throw new ArgumentOutOfRangeException(
-          nameof(XSize),
-          XSize,
-          "Board width must be between 1 and 19."
+          nameof(xSize),
+          xSize,
+          $"Board width must be between 1 and {MaxBoardSize}."
           );
     }
 
-    if (YSize is < 1 or > 19)
+    if (ySize is < 1 or > MaxBoardSize)
     {
       throw new ArgumentOutOfRangeException(
-          nameof(YSize),
-          YSize,
-          "Board height must be between 1 and 19."
+          nameof(ySize),
+          ySize,
+          $"Board height must be between 1 and {MaxBoardSize}."
           );
     }
   }
 
   public bool PlayMove(int x, int y, Stone stone)
   {
-    Positions[x - 1 , YSize - y] = stone;
+    int flippedX = x - 1;
+    int flippedY = YSize - y;
+
+    if (Positions[flippedX, flippedY] is Stone)
+    {
+      Console.WriteLine($"Illegal move. A stone already exists at ({x},{y})");
+      return false;
+    }
+
+    Positions[flippedX, flippedY] = stone;
     return true;
   }
 
@@ -60,7 +69,7 @@ public class Board
     if (x == 0)
     {
       // If it's a single digit number, push up the number and dots so the full board aligns properly
-      if (y + 1 < 10)
+      if ((YSize - y) < 10)
       {
         Console.Write(" ");
       }

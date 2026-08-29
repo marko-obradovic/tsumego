@@ -20,23 +20,19 @@ void PrintTree(SgfTree tree)
 // PrintTree(tree);
 
 var board = new Board(9, 9);
-var stone = new Stone(Color.Black);
-var stone2 = new Stone(Color.White);
-var stone3 = new Stone(Color.Black);
-var stone4 = new Stone(Color.White);
-var stone5 = new Stone(Color.Black);
-var stone6 = new Stone(Color.White);
-var stone7 = new Stone(Color.Black);
-var stone8 = new Stone(Color.White);
+var blackStone = new Stone(Color.Black);
+var whiteStone = new Stone(Color.White);
 
-board.PlayMove(5, 5, stone);
-board.PlayMove(5, 4, stone2);
-board.PlayMove(3, 3, stone3);
-board.PlayMove(5, 6, stone4);
-board.PlayMove(3, 7, stone5);
-board.PlayMove(4, 5, stone6);
-board.PlayMove(7, 3, stone7);
-board.PlayMove(6, 5, stone8);
+board.PlayMove(5, 5, blackStone);
+board.PlayMove(5, 4, whiteStone);
+board.PlayMove(3, 3, blackStone);
+board.PlayMove(5, 6, whiteStone);
+board.PlayMove(3, 7, blackStone);
+board.PlayMove(4, 5, whiteStone);
+board.PlayMove(7, 3, blackStone);
+board.PlayMove(6, 5, whiteStone);
+// incorrect move:
+board.PlayMove(6, 5, blackStone);
 
 board.PrintBoard();
 

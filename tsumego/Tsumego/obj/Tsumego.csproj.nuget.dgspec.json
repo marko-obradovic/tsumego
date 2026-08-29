@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/kovski/Documents/projects/tsumego/Tsumego.csproj": {}
+    "/home/kovski/Documents/projects/tsumego/Tsumego/Tsumego.csproj": {}
   },
   "projects": {
-    "/home/kovski/Documents/projects/tsumego/Tsumego.csproj": {
+    "/home/kovski/Documents/projects/tsumego/Tsumego/Tsumego.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/kovski/Documents/projects/tsumego/Tsumego.csproj",
+        "projectUniqueName": "/home/kovski/Documents/projects/tsumego/Tsumego/Tsumego.csproj",
         "projectName": "Tsumego",
-        "projectPath": "/home/kovski/Documents/projects/tsumego/Tsumego.csproj",
+        "projectPath": "/home/kovski/Documents/projects/tsumego/Tsumego/Tsumego.csproj",
         "packagesPath": "/home/kovski/.nuget/packages/",
-        "outputPath": "/home/kovski/Documents/projects/tsumego/obj/",
+        "outputPath": "/home/kovski/Documents/projects/tsumego/Tsumego/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/kovski/.nuget/NuGet/NuGet.Config"
