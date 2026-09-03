@@ -33,18 +33,34 @@ public class Board
     }
   }
 
-  public bool PlayMove(int x, int y, Stone stone)
+  private bool IsOnBoard(Coordinate position)
   {
-    int flippedX = x - 1;
-    int flippedY = YSize - y;
+    return position.X >= 0 &&
+           position.X < XSize &&
+           position.Y >= 0 &&
+           position.Y < YSize;
+  }
 
-    if (Positions[flippedX, flippedY] is Stone)
+  public static char GetLetter(int index)
+  {
+    return (char)('a' + index);
+  }
+
+  public bool PlayMove(Coordinate position, Stone stone)
+  {
+    if (!IsOnBoard(position))
     {
-      Console.WriteLine($"Illegal move. A stone already exists at ({x},{y})");
+      Console.WriteLine("Illegal move. Piece cannot be placed off the board.");
       return false;
     }
 
-    Positions[flippedX, flippedY] = stone;
+    if (Positions[position.X, position.Y] is not null)
+    {
+      Console.WriteLine($"Illegal move. A stone already exists at ({GetLetter(position.X)},{GetLetter(position.Y)})");
+      return false;
+    }
+
+    Positions[position.X, position.Y] = stone;
     return true;
   }
 
@@ -52,50 +68,49 @@ public class Board
   {
     Console.WriteLine($"Board Size: {XSize} x {YSize}\n------");
 
+    PrintRowLetters();
+
     for (int y = 0; y < YSize; y++)
     {
       for (int x = 0; x < XSize; x++)
       {
-        PrintColumnCell(x, y);
+        PrintColumnCell(new Coordinate(x, y));
       }
       Console.WriteLine();
     }
-    PrintRowLetters();
   }
 
-  public void PrintColumnCell(int x, int y)
+  public void PrintColumnCell(Coordinate position)
   {
     // If we're on the first row, first print the number of the row
-    if (x == 0)
+    if (position.X == 0)
     {
       // If it's a single digit number, push up the number and dots so the full board aligns properly
-      if ((YSize - y) < 10)
+      if ((position.Y) < 10)
       {
         Console.Write(" ");
       }
 
-      Console.Write(YSize - y);
+      Console.Write(GetLetter(position.Y));
     }
 
-    if (Positions[x, y] is null)
+    if (Positions[position.X, position.Y] is null)
     {
       Console.Write(" ·");
     }
     else
     {
-      Console.Write(Positions[x, y]!.Color == Color.Black ? " ●" : " ○");
+      Console.Write(Positions[position.X, position.Y]!.Color == Color.Black ? " ●" : " ○");
     }
   }
 
   private void PrintRowLetters()
   {
-    char[] alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
     Console.Write("  ");
 
     for (int x = 0; x < XSize; x++)
     {
-      Console.Write($" {alphabet[x]}");
+      Console.Write($" {GetLetter(x)}");
     }
     Console.WriteLine();
   }
