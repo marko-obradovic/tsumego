@@ -60,9 +60,32 @@ public class Board
       return false;
     }
 
+    var adjacentPositions = GetAdjacentPositions(position);
+
+    PrintAdjacentPositions(position, adjacentPositions);
+
     Positions[position.X, position.Y] = stone;
     return true;
   }
+
+  private List<Coordinate> GetAdjacentPositions(Coordinate position)
+  {
+    var adjacentPositions = new List<Coordinate>
+    {
+      new Coordinate(position.X + 1, position.Y),
+      new Coordinate(position.X - 1, position.Y),
+      new Coordinate(position.X, position.Y + 1),
+      new Coordinate(position.X, position.Y - 1)
+    };
+
+    return adjacentPositions
+      .Where(IsOnBoard)
+      .ToList();
+  }
+
+// ----------------------------------------- //
+// -------- CLI Board Visualization -------- //
+// ----------------------------------------- //
 
   public void PrintBoard()
   {
@@ -77,6 +100,15 @@ public class Board
         PrintColumnCell(new Coordinate(x, y));
       }
       Console.WriteLine();
+    }
+  }
+
+  public void PrintAdjacentPositions(Coordinate position, List<Coordinate> adjacentPositions)
+  {
+    Console.WriteLine($"Adjacent positions for {position}");
+    for (int i = 0; i < adjacentPositions.Count; i++)
+    {
+      Console.WriteLine(adjacentPositions[i]);
     }
   }
 

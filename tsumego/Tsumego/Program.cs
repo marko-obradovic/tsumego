@@ -36,9 +36,14 @@ board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("gc"), blackStone);
 board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("fe"), whiteStone);
 // incorrect move:
 board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("fe"), blackStone);
+// Corner move
+board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("aa"), whiteStone);
+// Edge move
+board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("ad"), blackStone);
 
 board.PrintBoard();
 
+// NEXT: create test suite
 // capture stones
 //  - Check if legal then capture
 //    - Ko - prevent infinite loop
