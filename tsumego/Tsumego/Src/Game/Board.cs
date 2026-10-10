@@ -13,8 +13,6 @@ public class Board
     XSize = xSize;
     YSize = ySize;
 
-    Positions = new Stone?[XSize, YSize];
-
     if (xSize is < 1 or > MaxBoardSize)
     {
       throw new ArgumentOutOfRangeException(
@@ -32,6 +30,9 @@ public class Board
           $"Board height must be between 1 and {MaxBoardSize}."
           );
     }
+
+    Positions = new Stone?[XSize, YSize];
+
   }
 
   private Stone?[,] ClonePosition()
