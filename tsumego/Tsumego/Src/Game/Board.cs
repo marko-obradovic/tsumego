@@ -66,8 +66,6 @@ public class Board
 
     List<Coordinate> adjacentPositions = GetAdjacentPositions(position);
 
-    PrintAdjacentPositions(position, adjacentPositions);
-
     // Capture enemy groups
     foreach (var adjacentPosition in adjacentPositions)
     {
@@ -86,9 +84,49 @@ public class Board
       }
 
       var enemyStoneGroup = GetStoneGroup(adjacentPosition);
+
+      if (!HasLiberty(enemyStoneGroup))
+      {
+        RemoveStoneGroup(enemyStoneGroup);
+      }
+    }
+    
+    // Check for Suicide
+    var ownStoneGroup = GetStoneGroup(position);
+
+    if (!HasLiberty(ownStoneGroup))
+    {
+      // Undo the move
+      Positions[position.X, position.Y] = null;
+
+      Console.WriteLine("Illegal move. Stone would have no liberties");
+      return false;
+    }
+    return true;
+  }
+
+  private void RemoveStoneGroup(List<Coordinate> stoneGroup)
+  {
+    foreach (var position in stoneGroup)
+    {
+      Positions[position.X, position.Y] = null;
+    }
+  }
+
+  private bool HasLiberty(List<Coordinate> stoneGroup)
+  {
+    foreach (var position in stoneGroup)
+    {
+      foreach (var adjacent in GetAdjacentPositions(position))
+      {
+        if (Positions[adjacent.X, adjacent.Y] is null)
+        {
+          return true;
+        }
+      }
     }
 
-    return true;
+    return false;
   }
 
   private List<Coordinate> GetStoneGroup(Coordinate start)
@@ -127,6 +165,11 @@ public class Board
           continue;
         }
 
+        if (adjacentStone.Color != stone.Color)
+        {
+          continue;
+        }
+
         visited.Add(adjacent);
         toVisit.Enqueue(adjacent);
       }
@@ -148,63 +191,5 @@ public class Board
     return adjacentPositions
       .Where(IsOnBoard)
       .ToList();
-  }
-
-// ----------------------------------------- //
-// -------- CLI Board Visualization -------- //
-// ----------------------------------------- //
-
-  public void PrintBoard()
-  {
-    Console.WriteLine($"Board Size: {XSize} x {YSize}\n------");
-
-    PrintRowLetters();
-
-    for (int y = 0; y < YSize; y++)
-    {
-      for (int x = 0; x < XSize; x++)
-      {
-        PrintColumnCell(new Coordinate(x, y));
-      }
-      Console.WriteLine();
-    }
-  }
-
-  public void PrintAdjacentPositions(Coordinate position, List<Coordinate> adjacentPositions)
-  {
-    Console.WriteLine($"Adjacent positions for {position}");
-    for (int i = 0; i < adjacentPositions.Count; i++)
-    {
-      Console.WriteLine(adjacentPositions[i]);
-    }
-  }
-
-  public void PrintColumnCell(Coordinate position)
-  {
-    // If we're on the first row, first print the number of the row
-    if (position.X == 0)
-    {
-      Console.Write(GetLetter(position.Y));
-    }
-
-    if (Positions[position.X, position.Y] is null)
-    {
-      Console.Write(" ·");
-    }
-    else
-    {
-      Console.Write(Positions[position.X, position.Y]!.Color == Color.Black ? " ●" : " ○");
-    }
-  }
-
-  private void PrintRowLetters()
-  {
-    Console.Write(" ");
-
-    for (int x = 0; x < XSize; x++)
-    {
-      Console.Write($" {GetLetter(x)}");
-    }
-    Console.WriteLine();
   }
 }

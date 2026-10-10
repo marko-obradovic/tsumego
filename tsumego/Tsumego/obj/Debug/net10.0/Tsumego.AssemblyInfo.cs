@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tsumego")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80944d26f2e7f52617418b305df5504e3dfc9c84")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c68f19930207b57ad13a13c8bcf2f28d10156e01")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tsumego")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tsumego")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
