@@ -100,31 +100,32 @@ public class Board
         RemoveStoneGroup(enemyStoneGroup);
       }
 
-      // Check for ko
-      if (_koForbiddenPosition is not null &&
-          PositionsAreEqual(Positions, _koForbiddenPosition))
-      {
-        RestorePosition(positionBeforeMove);
-
-        Console.WriteLine("Illegal move. Ko rule prevents this repitition.");
-      }
     }
-
-    // The move is legal. Save the previous board state
-    // as the position that the next move cannot recreate.
-    _koForbiddenPosition = positionBeforeMove;
+    
+    // Check for ko
+    if (_koForbiddenPosition is not null &&
+        PositionsAreEqual(Positions, _koForbiddenPosition))
+    {
+      RestorePosition(positionBeforeMove);
+      Console.WriteLine("Illegal move. Ko rule prevents this repitition.");
+      return false;
+    }
     
     // Check for Suicide
     var ownStoneGroup = GetStoneGroup(position);
 
     if (!HasLiberty(ownStoneGroup))
     {
-      // Undo the move
-      Positions[position.X, position.Y] = null;
-
+      RestorePosition(positionBeforeMove);
       Console.WriteLine("Illegal move. Stone would have no liberties");
       return false;
     }
+
+    // The move should be legal by this point.
+    // Save the previous board state as the position
+    // that the next move cannot recreate.
+    _koForbiddenPosition = positionBeforeMove;
+
     return true;
   }
 

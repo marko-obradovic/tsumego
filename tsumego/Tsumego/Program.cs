@@ -118,6 +118,9 @@ void SmallKoTest()
 
   // Here it should say that Ko is not allowed
   PlayMovePrintAndPause("fe", whiteStone);
+
+  // Random move just to see if it continues
+  PlayMovePrintAndPause("aa", blackStone);
 }
 
 // LargeCaptureTest();
