@@ -48,6 +48,7 @@ public class Board
 
   public bool PlayMove(Coordinate position, Stone stone)
   {
+    // Validate move
     if (!IsOnBoard(position))
     {
       Console.WriteLine("Illegal move. Piece cannot be placed off the board.");
@@ -60,12 +61,78 @@ public class Board
       return false;
     }
 
-    var adjacentPositions = GetAdjacentPositions(position);
+    // Place stone
+    Positions[position.X, position.Y] = stone;
+
+    List<Coordinate> adjacentPositions = GetAdjacentPositions(position);
 
     PrintAdjacentPositions(position, adjacentPositions);
 
-    Positions[position.X, position.Y] = stone;
+    // Capture enemy groups
+    foreach (var adjacentPosition in adjacentPositions)
+    {
+      var adjacentStone = Positions[adjacentPosition.X, adjacentPosition.Y];
+
+      // Empty position
+      if (adjacentStone is null)
+      {
+        continue;
+      }
+
+      // Friendly stone
+      if (adjacentStone.Color == stone.Color)
+      {
+        continue;
+      }
+
+      var enemyStoneGroup = GetStoneGroup(adjacentPosition);
+    }
+
     return true;
+  }
+
+  private List<Coordinate> GetStoneGroup(Coordinate start)
+  {
+    var stoneGroup = new List<Coordinate>(); 
+    var toVisit = new Queue<Coordinate>();
+    var visited = new HashSet<Coordinate>();
+
+    var stone = Positions[start.X, start.Y];
+
+    if (stone is null)
+    {
+      return stoneGroup;
+    }
+
+    toVisit.Enqueue(start);
+    visited.Add(start);
+
+    while(toVisit.Count > 0)
+    {
+      var current = toVisit.Dequeue();
+
+      stoneGroup.Add(current);
+
+      foreach (var adjacent in GetAdjacentPositions(current))
+      {
+        if (visited.Contains(adjacent))
+        {
+          continue;
+        }
+
+        var adjacentStone = Positions[adjacent.X, adjacent.Y];
+
+        if (adjacentStone is null)
+        {
+          continue;
+        }
+
+        visited.Add(adjacent);
+        toVisit.Enqueue(adjacent);
+      }
+    }
+
+    return stoneGroup;
   }
 
   private List<Coordinate> GetAdjacentPositions(Coordinate position)
@@ -117,12 +184,6 @@ public class Board
     // If we're on the first row, first print the number of the row
     if (position.X == 0)
     {
-      // If it's a single digit number, push up the number and dots so the full board aligns properly
-      if ((position.Y) < 10)
-      {
-        Console.Write(" ");
-      }
-
       Console.Write(GetLetter(position.Y));
     }
 
@@ -138,7 +199,7 @@ public class Board
 
   private void PrintRowLetters()
   {
-    Console.Write("  ");
+    Console.Write(" ");
 
     for (int x = 0; x < XSize; x++)
     {

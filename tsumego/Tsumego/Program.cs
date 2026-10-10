@@ -23,30 +23,25 @@ var board = new Board(9, 9);
 var blackStone = new Stone(Color.Black);
 var whiteStone = new Stone(Color.White);
 
-// Should be out of bounds
-board.PlayMove(new Coordinate(19, 19), blackStone);
+void PlayMovePrintAndPause(string letterCoordinates, Stone stone)
+{
+  board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate(letterCoordinates), stone);
+  board.PrintBoard();
+  System.Threading.Thread.Sleep(300);
+}
 
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("ee"), blackStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("ed"), whiteStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("cc"), blackStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("ef"), whiteStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("cg"), blackStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("de"), whiteStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("gc"), blackStone);
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("fe"), whiteStone);
+PlayMovePrintAndPause("ee", blackStone);
+PlayMovePrintAndPause("ed", whiteStone);
+PlayMovePrintAndPause("cc", blackStone);
+PlayMovePrintAndPause("ef", whiteStone);
+PlayMovePrintAndPause("cg", blackStone);
+PlayMovePrintAndPause("de", whiteStone);
+PlayMovePrintAndPause("gc", blackStone);
+PlayMovePrintAndPause("fe", whiteStone);
+
 // incorrect move:
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("fe"), blackStone);
+PlayMovePrintAndPause("fe", blackStone);
 // Corner move
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("aa"), whiteStone);
+PlayMovePrintAndPause("aa", whiteStone);
 // Edge move
-board.PlayMove(Coordinate.ConvertSgfToIndexCoordinate("ad"), blackStone);
-
-board.PrintBoard();
-
-// NEXT: create test suite
-// capture stones
-//  - Check if legal then capture
-//    - Ko - prevent infinite loop
-//    - you cannot place a stone in the middle of 4 stones - call it IsSuicideMove()
-//  - should be able to capture on edges
-//      - you can if the stone has no liberties (then its a capture)
+PlayMovePrintAndPause("ad", blackStone);
