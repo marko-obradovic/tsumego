@@ -6,6 +6,7 @@ public class Board
   public int YSize { get; }
   public Stone?[,] Positions { get; }
   public const int MaxBoardSize = 19;
+  private Stone?[,]? _koForbiddenPosition;
 
   public Board(int xSize, int ySize)
   {
@@ -32,6 +33,12 @@ public class Board
           );
     }
   }
+
+  private Stone?[,] ClonePosition()
+  {
+    return (Stone?[,])Positions.Clone();
+  }
+
 
   private bool IsOnBoard(Coordinate position)
   {
@@ -61,6 +68,9 @@ public class Board
       return false;
     }
 
+    // Save the board before the move
+    var positionBeforeMove = ClonePosition();
+
     // Place stone
     Positions[position.X, position.Y] = stone;
 
@@ -89,7 +99,20 @@ public class Board
       {
         RemoveStoneGroup(enemyStoneGroup);
       }
+
+      // Check for ko
+      if (_koForbiddenPosition is not null &&
+          PositionsAreEqual(Positions, _koForbiddenPosition))
+      {
+        RestorePosition(positionBeforeMove);
+
+        Console.WriteLine("Illegal move. Ko rule prevents this repitition.");
+      }
     }
+
+    // The move is legal. Save the previous board state
+    // as the position that the next move cannot recreate.
+    _koForbiddenPosition = positionBeforeMove;
     
     // Check for Suicide
     var ownStoneGroup = GetStoneGroup(position);
@@ -191,5 +214,25 @@ public class Board
     return adjacentPositions
       .Where(IsOnBoard)
       .ToList();
+  }
+
+  private bool PositionsAreEqual(Stone?[,] first, Stone?[,] second)
+  {
+    for (int x = 0; x < XSize; x++)
+    {
+      for (int y = 0; y < YSize; y++)
+      {
+        if (first[x, y]?.Color != second[x, y]?.Color)
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private void RestorePosition(Stone?[,] snapshot)
+  {
+    Array.Copy(snapshot, Positions, Positions.Length);
   }
 }

@@ -36,7 +36,7 @@ void PlayMovePrintAndPause(string letterCoordinates, Stone stone)
   System.Threading.Thread.Sleep(500);
 }
 
-void FirstTest()
+void GenericPlacementTest()
 {
   PlayMovePrintAndPause("ee", blackStone);
   PlayMovePrintAndPause("ed", whiteStone);
@@ -104,7 +104,24 @@ void MediumCornerCaptureTest()
   PlayMovePrintAndPause("ig", blackStone);
 }
 
+void SmallKoTest()
+{
+  PlayMovePrintAndPause("ed", whiteStone);
+  PlayMovePrintAndPause("ef", whiteStone);
+  PlayMovePrintAndPause("de", whiteStone);
+  PlayMovePrintAndPause("fe", whiteStone);
+
+  PlayMovePrintAndPause("ge", blackStone);
+  PlayMovePrintAndPause("fd", blackStone);
+  PlayMovePrintAndPause("ff", blackStone);
+  PlayMovePrintAndPause("ee", blackStone);
+
+  // Here it should say that Ko is not allowed
+  PlayMovePrintAndPause("fe", whiteStone);
+}
+
 // LargeCaptureTest();
 // SmallCornerCaptureTest();
 // MediumCornerCaptureTest();
-MediumCornerSuicidePreventionTest();
+// MediumCornerSuicidePreventionTest();
+SmallKoTest();
