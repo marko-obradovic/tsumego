@@ -20,7 +20,7 @@ void PrintTree(SgfTree tree)
 
 // PrintTree(tree);
 
-var board = new Board(9, 9);
+var board = new Board(3, 4);
 var cliGraphics = new CliGraphics(board);
 
 Console.WriteLine($"Board Size: {board.XSize} x {board.YSize}\n------");
@@ -123,8 +123,22 @@ void SmallKoTest()
   PlayMovePrintAndPause("aa", blackStone);
 }
 
-LargeCaptureTest();
+// LargeCaptureTest();
 // SmallCornerCaptureTest();
 // MediumCornerCaptureTest();
 // MediumCornerSuicidePreventionTest();
 // SmallKoTest();
+
+// Black stones surround the centre on three sides.
+board.PlayMove(new Coordinate(1, 0), new Stone(Color.Black));
+board.PlayMove(new Coordinate(0, 1), new Stone(Color.Black));
+board.PlayMove(new Coordinate(2, 1), new Stone(Color.Black));
+
+// White at (1, 1) has one liberty: (1, 2).
+board.PlayMove(new Coordinate(1, 1), new Stone(Color.White));
+
+var result = board.PlayMove(new Coordinate(1, 2), new Stone(Color.Black));
+
+cliGraphics.PrintBoard();
+
+Console.WriteLine(result);

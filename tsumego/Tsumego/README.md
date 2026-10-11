@@ -25,5 +25,14 @@ Gamenode: A single move in the game node tree
                 7. etc.
 
 # Things to test for:
-- When stone on the edge, does it not count liberties outside the range of the board?
-- Does it prevent you from putting a stone on a stone that's currently on the board?
+
+| Area                  | Cases to cover                                                                                |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| Construction          | Valid sizes, minimum/maximum size, invalid width and height                                   |
+| `GetLetter`           | Correct letters, boundary indices                                                             |
+| Basic moves           | Empty intersection, occupied intersection, off-board coordinates                              |
+| Liberties and suicide | Legal moves with liberties, illegal suicide, suicide that captures an enemy group             |
+| Capturing             | Single stone, multiple stones, groups with remaining liberties, edge and corner captures      |
+| Stone groups          | Connected friendly stones, separate groups, groups connected in different directions          |
+| Ko                    | Immediate repetition rejected, board restored after rejection, legal moves after a ko capture |
+| State integrity       | Illegal moves don't change the board; valid moves preserve unrelated stones                   |
