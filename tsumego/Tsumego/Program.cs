@@ -123,8 +123,8 @@ void SmallKoTest()
   PlayMovePrintAndPause("aa", blackStone);
 }
 
-// LargeCaptureTest();
+LargeCaptureTest();
 // SmallCornerCaptureTest();
 // MediumCornerCaptureTest();
 // MediumCornerSuicidePreventionTest();
-SmallKoTest();
+// SmallKoTest();
