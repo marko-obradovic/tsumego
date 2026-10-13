@@ -20,7 +20,7 @@ void PrintTree(SgfTree tree)
 
 // PrintTree(tree);
 
-var board = new Board(3, 4);
+var board = new Board(9, 9);
 var cliGraphics = new CliGraphics(board);
 
 Console.WriteLine($"Board Size: {board.XSize} x {board.YSize}\n------");
@@ -129,16 +129,30 @@ void SmallKoTest()
 // MediumCornerSuicidePreventionTest();
 // SmallKoTest();
 
-// Black stones surround the centre on three sides.
 board.PlayMove(new Coordinate(1, 0), new Stone(Color.Black));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
 board.PlayMove(new Coordinate(0, 1), new Stone(Color.Black));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
 board.PlayMove(new Coordinate(2, 1), new Stone(Color.Black));
-
-// White at (1, 1) has one liberty: (1, 2).
-board.PlayMove(new Coordinate(1, 1), new Stone(Color.White));
-
-var result = board.PlayMove(new Coordinate(1, 2), new Stone(Color.Black));
-
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
+board.PlayMove(new Coordinate(1, 2), new Stone(Color.Black));
+System.Threading.Thread.Sleep(500);
 cliGraphics.PrintBoard();
 
-Console.WriteLine(result);
+// White surrounds (1, 2)
+board.PlayMove(new Coordinate(0, 2), new Stone(Color.White));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
+board.PlayMove(new Coordinate(1, 3), new Stone(Color.White));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
+board.PlayMove(new Coordinate(2, 2), new Stone(Color.White));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
+board.PlayMove(new Coordinate(1, 1), new Stone(Color.White));
+System.Threading.Thread.Sleep(500);
+cliGraphics.PrintBoard();
+
